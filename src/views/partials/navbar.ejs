@@ -1,0 +1,21 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a href="/loads" class="brand">BEST Freight ERP</a>
+    <a href="/loads" class="nav-link">Yüklemeler (YL1)</a>
+    <!-- İleride: <a href="/ameta" class="nav-link">AMETA</a> vs. -->
+  </div>
+
+  <div class="nav-right">
+    <% if (currentUser) { %>
+      <span class="user-info">
+        <strong><%= currentUser.username %></strong>
+        (<%= currentUser.role %>)
+      </span>
+      <form action="/auth/logout" method="post" class="logout-form">
+        <button type="submit" class="btn btn-outline">Çıkış</button>
+      </form>
+    <% } else { %>
+      <a href="/auth/login" class="btn">Giriş</a>
+    <% } %>
+  </div>
+</nav>

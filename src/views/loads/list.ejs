@@ -1,0 +1,89 @@
+<h1>Yüklemeler (YL1 Kayıtları)</h1>
+
+<div style="margin-bottom: 12px;">
+  <a href="/loads/new" class="btn">+ Yeni Yükleme</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pozisyon</th>
+      <th>Gönderici</th>
+      <th>Alıcı</th>
+      <th>Yükleme</th>
+      <th>Boşaltma</th>
+      <th>Araç / Dorse</th>
+      <th>Çıkış</th>
+      <th>Varış</th>
+      <th>Detay</th>
+      <th>Düzenle</th>
+      <th>Sil</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if (loads && loads.length > 0) { %>
+      <% loads.forEach(function(load) { %>
+        <tr
+          onclick="window.location='/loads/<%= load.id %>'"
+          style="cursor:pointer;"
+        >
+          <td><strong><%= load.position_no %></strong></td>
+          <td><%= load.customer_name || '' %></td>
+          <td><%= load.consignee_name || '' %></td>
+          <td>
+            <%= [load.loading_city, load.loading_country].filter(Boolean).join(' / ') %>
+          </td>
+          <td>
+            <%= [load.unloading_city, load.unloading_country].filter(Boolean).join(' / ') %>
+          </td>
+          <td>
+            <%= load.truck_plate || '-' %>
+            <% if (load.trailer_plate) { %>
+              / <%= load.trailer_plate %>
+            <% } %>
+          </td>
+          <td><%= load.exit_date || '' %></td>
+          <td><%= load.arrival_date || '' %></td>
+          <td>
+            <a
+              href="/loads/<%= load.id %>"
+              class="btn btn-outline"
+              onclick="event.stopPropagation();"
+            >
+              Aç
+            </a>
+          </td>
+          <td>
+            <a
+              href="/loads/<%= load.id %>/edit"
+              class="btn btn-outline"
+              onclick="event.stopPropagation();"
+            >
+              Düzenle
+            </a>
+          </td>
+          <td>
+            <form
+              method="POST"
+              action="/loads/<%= load.id %>/delete"
+              style="display:inline;"
+              onsubmit="event.stopPropagation(); return confirm('Bu yükleme kaydını silmek istediğinizden emin misiniz?');"
+            >
+              <button
+                type="submit"
+                class="btn btn-danger"
+                onclick="event.stopPropagation();"
+              >
+                Sil
+              </button>
+            </form>
+          </td>
+        </tr>
+      <% }); %>
+    <% } else { %>
+      <tr>
+        <td colspan="11">Hiç yükleme kaydı bulunamadı.</td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>

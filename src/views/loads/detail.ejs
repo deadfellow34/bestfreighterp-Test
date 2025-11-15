@@ -1,0 +1,185 @@
+<h1>Pozisyon: <%= load.position_no %></h1>
+
+<div style="margin-bottom: 14px;">
+  <a href="/loads" class="btn btn-outline">← Listeye Dön</a>
+</div>
+
+<h2>Genel Bilgiler</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Gönderici / Müşteri</th>
+      <td><%= load.customer_name || '' %></td>
+    </tr>
+    <tr>
+      <th>Alıcı</th>
+      <td><%= load.consignee_name || '' %></td>
+    </tr>
+    <tr>
+      <th>Malzeme Cinsi</th>
+      <td><%= load.goods_description || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Yükleme & Boşaltma</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Yükleme Ülke / Şehir</th>
+      <td>
+        <%=
+          [load.loading_country, load.loading_city]
+            .filter(Boolean)
+            .join(' / ')
+        %>
+      </td>
+    </tr>
+    <tr>
+      <th>Yükleme Adresi</th>
+      <td><%= load.loading_address || '' %></td>
+    </tr>
+    <tr>
+      <th>Boşaltma Ülke / Şehir</th>
+      <td>
+        <%=
+          [load.unloading_country, load.unloading_city]
+            .filter(Boolean)
+            .join(' / ')
+        %>
+      </td>
+    </tr>
+    <tr>
+      <th>Boşaltma Adresi</th>
+      <td><%= load.unloading_address || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Mal & Kap Bilgileri</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Kap Adedi</th>
+      <td><%= load.packages || '' %></td>
+    </tr>
+    <tr>
+      <th>Palet Sayısı</th>
+      <td><%= load.pallets || '' %></td>
+    </tr>
+    <tr>
+      <th>LDM</th>
+      <td><%= load.ldm || '' %></td>
+    </tr>
+    <tr>
+      <th>Brüt Ağırlık (kg)</th>
+      <td><%= load.gross_weight || '' %></td>
+    </tr>
+    <tr>
+      <th>Net Ağırlık (kg)</th>
+      <td><%= load.net_weight || '' %></td>
+    </tr>
+    <tr>
+      <th>Hacim (m³)</th>
+      <td><%= load.volume_m3 || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Araç & Şoför</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Çekici Plakası</th>
+      <td><%= load.truck_plate || '' %></td>
+    </tr>
+    <tr>
+      <th>Dorse Plakası</th>
+      <td><%= load.trailer_plate || '' %></td>
+    </tr>
+    <tr>
+      <th>Şoför Adı</th>
+      <td><%= load.driver_name || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Dokümanlar</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">T1 / MRN No</th>
+      <td><%= load.t1_mrn || '' %></td>
+    </tr>
+    <tr>
+      <th>CMR No</th>
+      <td><%= load.cmr_no || '' %></td>
+    </tr>
+    <tr>
+      <th>Hat / Gemi</th>
+      <td><%= load.ferry_line || '' %></td>
+    </tr>
+    <tr>
+      <th>Sefer No</th>
+      <td><%= load.ferry_voyage_no || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Tarihler</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Yükleme Tarihi</th>
+      <td><%= load.loading_date || '' %></td>
+    </tr>
+    <tr>
+      <th>Boşaltma Tarihi</th>
+      <td><%= load.unloading_date || '' %></td>
+    </tr>
+    <tr>
+      <th>Çıkış Tarihi</th>
+      <td><%= load.exit_date || '' %></td>
+    </tr>
+    <tr>
+      <th>Varış Tarihi</th>
+      <td><%= load.arrival_date || '' %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Navlun & Masraf</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">Navlun</th>
+      <td>
+        <% if (load.navlun_amount) { %>
+          <%= load.navlun_amount %> <%= load.navlun_currency || '' %>
+        <% } %>
+      </td>
+    </tr>
+    <tr>
+      <th>Masraf</th>
+      <td>
+        <% if (load.cost_amount) { %>
+          <%= load.cost_amount %> <%= load.cost_currency || '' %>
+        <% } %>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>Notlar</h2>
+<table>
+  <tbody>
+    <tr>
+      <th style="width:220px;">İç Not</th>
+      <td><%= load.notes || '' %></td>
+    </tr>
+    <tr>
+      <th>Oluşturan</th>
+      <td><%= load.created_by || '' %> / <%= load.created_at || '' %></td>
+    </tr>
+  </tbody>
+</table>

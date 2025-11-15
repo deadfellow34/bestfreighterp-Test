@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title><%= typeof title !== 'undefined' ? title : 'BEST Freight ERP' %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/loads">Yüklemeler (YL1)</a>
+      <% if (currentUser) { %>
+        <span> | Giriş yapan: <%= currentUser.username %> (<%= currentUser.role %>)</span>
+        <form action="/auth/logout" method="post" style="display:inline;">
+          <button type="submit">Çıkış</button>
+        </form>
+      <% } else { %>
+        <a href="/auth/login">Giriş</a>
+      <% } %>
+    </nav>
+  </header>
+
+  <main>
+    <%- body %>
+  </main>
+</body>
+</html>

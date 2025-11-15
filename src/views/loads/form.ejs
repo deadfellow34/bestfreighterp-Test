@@ -1,0 +1,392 @@
+<h1>Yeni Yükleme (YL1 Kaydı)</h1>
+
+<% if (errors) { %>
+  <p style="color:red;"><%= errors %></p>
+<% } %>
+
+<% if (typeof duplicatePosition !== 'undefined' && duplicatePosition) { %>
+  <script>
+    alert('Bu pozisyon numarası zaten kayıtlı. Lütfen farklı bir Pozisyon No girin.');
+  </script>
+<% } %>
+
+
+<form action="/loads" method="post">
+
+  <!-- GENEL BİLGİLER -->
+  <h2>Genel Bilgiler</h2>
+  <div>
+    <label for="position_no">Pozisyon No:</label>
+    <input
+      type="text"
+      id="position_no"
+      name="position_no"
+      value="<%= load.position_no || '' %>"
+      required
+    />
+  </div>
+
+  <!-- GÖNDERİCİ DROPDOWN -->
+  <div>
+    <label for="customer_name">Gönderici / Müşteri:</label>
+    <select id="customer_name" name="customer_name" required>
+      <option value="">Seçiniz</option>
+      <% if (companies && companies.length > 0) { %>
+        <% companies.forEach(function(cmp) { %>
+          <option
+            value="<%= cmp.name %>"
+            <%= load.customer_name === cmp.name ? 'selected' : '' %>
+          >
+            <%= cmp.name %>
+          </option>
+        <% }); %>
+      <% } %>
+    </select>
+  </div>
+
+  <!-- ALICI DROPDOWN -->
+  <div>
+    <label for="consignee_name">Alıcı:</label>
+    <select id="consignee_name" name="consignee_name">
+      <option value="">Seçiniz</option>
+      <% if (companies && companies.length > 0) { %>
+        <% companies.forEach(function(cmp) { %>
+          <option
+            value="<%= cmp.name %>"
+            <%= load.consignee_name === cmp.name ? 'selected' : '' %>
+          >
+            <%= cmp.name %>
+          </option>
+        <% }); %>
+      <% } %>
+    </select>
+  </div>
+
+  <hr />
+
+  <!-- YÜKLEME / BOŞALTMA -->
+  <h2>Yükleme & Boşaltma</h2>
+
+  <div>
+    <label for="loading_country">Yükleme Ülke:</label>
+    <input
+      type="text"
+      id="loading_country"
+      name="loading_country"
+      value="<%= load.loading_country || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="loading_city">Yükleme Şehir:</label>
+    <input
+      type="text"
+      id="loading_city"
+      name="loading_city"
+      value="<%= load.loading_city || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="loading_address">Yükleme Adresi:</label>
+    <input
+      type="text"
+      id="loading_address"
+      name="loading_address"
+      value="<%= load.loading_address || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="unloading_country">Boşaltma Ülke:</label>
+    <input
+      type="text"
+      id="unloading_country"
+      name="unloading_country"
+      value="<%= load.unloading_country || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="unloading_city">Boşaltma Şehir:</label>
+    <input
+      type="text"
+      id="unloading_city"
+      name="unloading_city"
+      value="<%= load.unloading_city || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="unloading_address">Boşaltma Adresi:</label>
+    <input
+      type="text"
+      id="unloading_address"
+      name="unloading_address"
+      value="<%= load.unloading_address || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- MAL & KAP BİLGİLERİ -->
+  <h2>Mal & Kap Bilgileri</h2>
+
+  <div>
+    <label for="goods_description">Malzeme Cinsi:</label>
+    <input
+      type="text"
+      id="goods_description"
+      name="goods_description"
+      value="<%= load.goods_description || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="packages">Kap Adedi:</label>
+    <input
+      type="number"
+      id="packages"
+      name="packages"
+      value="<%= load.packages || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="pallets">Palet Sayısı:</label>
+    <input
+      type="number"
+      id="pallets"
+      name="pallets"
+      value="<%= load.pallets || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="ldm">LDM:</label>
+    <input
+      type="text"
+      id="ldm"
+      name="ldm"
+      value="<%= load.ldm || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="gross_weight">Brüt Ağırlık (kg):</label>
+    <input
+      type="text"
+      id="gross_weight"
+      name="gross_weight"
+      value="<%= load.gross_weight || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="net_weight">Net Ağırlık (kg):</label>
+    <input
+      type="text"
+      id="net_weight"
+      name="net_weight"
+      value="<%= load.net_weight || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="volume_m3">Hacim (m³):</label>
+    <input
+      type="text"
+      id="volume_m3"
+      name="volume_m3"
+      value="<%= load.volume_m3 || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- ARAÇ / ŞOFÖR -->
+  <h2>Araç & Şoför</h2>
+
+  <div>
+    <label for="truck_plate">Çekici Plakası:</label>
+    <input
+      type="text"
+      id="truck_plate"
+      name="truck_plate"
+      value="<%= load.truck_plate || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="trailer_plate">Dorse Plakası:</label>
+    <input
+      type="text"
+      id="trailer_plate"
+      name="trailer_plate"
+      value="<%= load.trailer_plate || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="driver_name">Şoför Adı:</label>
+    <input
+      type="text"
+      id="driver_name"
+      name="driver_name"
+      value="<%= load.driver_name || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- DOKÜMANLAR -->
+  <h2>Dokümanlar</h2>
+
+  <div>
+    <label for="t1_mrn">T1 / MRN No:</label>
+    <input
+      type="text"
+      id="t1_mrn"
+      name="t1_mrn"
+      value="<%= load.t1_mrn || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="cmr_no">CMR No:</label>
+    <input
+      type="text"
+      id="cmr_no"
+      name="cmr_no"
+      value="<%= load.cmr_no || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="ferry_line">Hat / Gemi:</label>
+    <input
+      type="text"
+      id="ferry_line"
+      name="ferry_line"
+      value="<%= load.ferry_line || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="ferry_voyage_no">Sefer No:</label>
+    <input
+      type="text"
+      id="ferry_voyage_no"
+      name="ferry_voyage_no"
+      value="<%= load.ferry_voyage_no || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- TARİHLER -->
+  <h2>Tarihler</h2>
+
+  <div>
+    <label for="exit_date">Çıkış Tarihi (TR çıkış / UK yönü):</label>
+    <input
+      type="date"
+      id="exit_date"
+      name="exit_date"
+      value="<%= load.exit_date || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="arrival_date">Varış Tarihi (TR giriş / dönüş):</label>
+    <input
+      type="date"
+      id="arrival_date"
+      name="arrival_date"
+      value="<%= load.arrival_date || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="loading_date">Yükleme Tarihi:</label>
+    <input
+      type="date"
+      id="loading_date"
+      name="loading_date"
+      value="<%= load.loading_date || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="unloading_date">Boşaltma Tarihi:</label>
+    <input
+      type="date"
+      id="unloading_date"
+      name="unloading_date"
+      value="<%= load.unloading_date || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- FİNANS -->
+  <h2>Navlun & Masraf</h2>
+
+  <div>
+    <label for="navlun_currency">Navlun Para Birimi:</label>
+    <input
+      type="text"
+      id="navlun_currency"
+      name="navlun_currency"
+      placeholder="EUR / GBP / USD / TRY"
+      value="<%= load.navlun_currency || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="navlun_amount">Navlun Tutarı:</label>
+    <input
+      type="text"
+      id="navlun_amount"
+      name="navlun_amount"
+      value="<%= load.navlun_amount || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="cost_currency">Masraf Para Birimi:</label>
+    <input
+      type="text"
+      id="cost_currency"
+      name="cost_currency"
+      placeholder="EUR / GBP / USD / TRY"
+      value="<%= load.cost_currency || '' %>"
+    />
+  </div>
+
+  <div>
+    <label for="cost_amount">Toplam Masraf:</label>
+    <input
+      type="text"
+      id="cost_amount"
+      name="cost_amount"
+      value="<%= load.cost_amount || '' %>"
+    />
+  </div>
+
+  <hr />
+
+  <!-- NOTLAR -->
+  <h2>Notlar</h2>
+  <div>
+    <label for="notes">İç Not / Açıklama:</label>
+    <textarea
+      id="notes"
+      name="notes"
+      rows="3"
+      style="width:100%; max-width:600px;"
+    ><%= load.notes || '' %></textarea>
+  </div>
+
+  <button type="submit" class="btn">Kaydet</button>
+</form>
